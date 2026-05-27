@@ -2,7 +2,7 @@
 // Core business logic for image library indexing and querying
 
 import { getDB } from "@rodrigo-barraza/service-library";
-import { COLLECTION } from "../types.ts";
+import { COLLECTIONS } from "../constants.ts";
 import type { ImageDocument } from "../types.ts";
 import logger from "../logger.ts";
 
@@ -12,7 +12,7 @@ export async function setupCollections(): Promise<void> {
   const existingCollections = await database.listCollections().toArray();
   const existingCollectionNames = new Set(existingCollections.map((existingCollection: { name: string }) => existingCollection.name));
 
-  for (const collectionName of Object.values(COLLECTION)) {
+  for (const collectionName of Object.values(COLLECTIONS)) {
     if (!existingCollectionNames.has(collectionName)) {
       await database.createCollection(collectionName);
       logger.info(`Created collection: ${collectionName}`);
@@ -20,7 +20,7 @@ export async function setupCollections(): Promise<void> {
   }
 
   // ── Indexes ──────────────────────────────────────────────────
-  const imagesCollection = database.collection(COLLECTION.IMAGES);
+  const imagesCollection = database.collection(COLLECTIONS.IMAGES);
 
   await imagesCollection.createIndex({ filePath: 1 }, { unique: true });
   await imagesCollection.createIndex({ fileHash: 1 });
@@ -38,7 +38,7 @@ export async function setupCollections(): Promise<void> {
 
 export async function getImageCount(): Promise<number> {
   const database = getDB();
-  return database.collection(COLLECTION.IMAGES).countDocuments();
+  return database.collection(COLLECTIONS.IMAGES).countDocuments();
 }
 
 export async function getImages(
@@ -48,7 +48,7 @@ export async function getImages(
   sortDirection: 1 | -1 = -1,
 ): Promise<{ images: ImageDocument[]; total: number }> {
   const database = getDB();
-  const imagesCollection = database.collection<ImageDocument>(COLLECTION.IMAGES);
+  const imagesCollection = database.collection<ImageDocument>(COLLECTIONS.IMAGES);
 
   const total = await imagesCollection.countDocuments();
   const images = await imagesCollection
@@ -67,7 +67,7 @@ export async function searchImages(
   limit: number = 50,
 ): Promise<{ images: ImageDocument[]; total: number }> {
   const database = getDB();
-  const imagesCollection = database.collection<ImageDocument>(COLLECTION.IMAGES);
+  const imagesCollection = database.collection<ImageDocument>(COLLECTIONS.IMAGES);
 
   const filter = { $text: { $search: query } };
   const total = await imagesCollection.countDocuments(filter);

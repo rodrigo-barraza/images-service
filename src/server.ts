@@ -2,11 +2,11 @@
 
 import { createService } from "@rodrigo-barraza/service-library";
 import type { Application, Request, Response, NextFunction } from "express";
-import CONFIG from "./config.ts";
+import configuration from "./config.ts";
 
 // ─── Collection Setup ──────────────────────────────────────────
 import { setupCollections } from "./services/LibraryService.ts";
-import { initMinio } from "./services/ThumbnailService.ts";
+import { initializeMinio } from "./services/ThumbnailService.ts";
 
 // ─── Routes ────────────────────────────────────────────────────
 import libraryRoutes from "./routes/LibraryRoutes.ts";
@@ -21,11 +21,11 @@ import metadataRoutes from "./routes/MetadataRoutes.ts";
 await createService({
   name: "images-service",
   version: "0.1.0",
-  port: CONFIG.IMAGES_SERVICE_PORT,
+  port: configuration.IMAGES_SERVICE_PORT,
   description: "Image library backend — filesystem indexing, metadata extraction, EXIF/RAW processing, organization",
   mongo: {
-    uri: CONFIG.MONGODB_URI!,
-    dbName: CONFIG.MONGODB_DB_NAME,
+    uri: configuration.MONGODB_URI!,
+    dbName: configuration.MONGODB_DB_NAME,
   },
   routes: [
     { path: "/library", router: libraryRoutes },
@@ -46,7 +46,7 @@ await createService({
     await setupCollections();
 
     // Initialize MinIO for thumbnail storage
-    await initMinio();
+    await initializeMinio();
   },
   cron: [],
 });

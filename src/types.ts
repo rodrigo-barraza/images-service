@@ -14,52 +14,11 @@ export interface ImagesConfig {
   AUTH_ENABLED: boolean;
 }
 
-// ── Collection Names ────────────────────────────────────────
+// ─── Imports & Constants ─────────────────────────────────────
 
-export const COLLECTION = {
-  IMAGES: "images",
-  ALBUMS: "albums",
-  TAGS: "tags",
-  METADATA: "metadata",
-} as const;
+import { COLLECTIONS, SUPPORTED_IMAGE_EXTENSIONS } from "./constants.ts";
+export { COLLECTIONS, SUPPORTED_IMAGE_EXTENSIONS };
 
-// ── Supported Image Formats ─────────────────────────────────
-
-export const SUPPORTED_IMAGE_EXTENSIONS = new Set([
-  // Standard raster formats
-  ".jpg",
-  ".jpeg",
-  ".png",
-  ".gif",
-  ".webp",
-  ".avif",
-  ".bmp",
-  ".tiff",
-  ".tif",
-  ".ico",
-  ".svg",
-
-  // RAW camera formats
-  ".cr2",
-  ".cr3",
-  ".nef",
-  ".arw",
-  ".orf",
-  ".rw2",
-  ".dng",
-  ".raf",
-  ".pef",
-  ".srw",
-  ".raw",
-
-  // High dynamic range
-  ".hdr",
-  ".exr",
-
-  // Adobe / design
-  ".psd",
-  ".psb",
-]);
 
 // ── Image Database Document ─────────────────────────────────
 

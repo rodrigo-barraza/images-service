@@ -2,7 +2,7 @@
 
 import type { ImagesConfig } from "./types.ts";
 
-const CONFIG: ImagesConfig = {
+const configuration: ImagesConfig = {
   IMAGES_SERVICE_PORT: parseInt(process.env.IMAGES_SERVICE_PORT ?? "", 10) || 5613,
   MONGODB_URI: process.env.MONGO_URI,
   MONGODB_DB_NAME: process.env.MONGO_DB_NAME || "images",
@@ -27,4 +27,4 @@ const CONFIG: ImagesConfig = {
   AUTH_ENABLED: process.env.AUTH_ENABLED === "true",
 };
 
-export default CONFIG;
+export default configuration;
