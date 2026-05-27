@@ -1,16 +1,16 @@
 // ─── Library Service ────────────────────────────────────────
 // Core business logic for image library indexing and querying
 
-import { getDb } from "@rodrigo-barraza/service-library";
+import { getDB } from "@rodrigo-barraza/service-library";
 import { COLLECTION } from "../types.ts";
 import type { ImageDocument } from "../types.ts";
 import logger from "../logger.ts";
 
 export async function setupCollections(): Promise<void> {
-  const database = getDb();
+  const database = getDB();
 
   const existingCollections = await database.listCollections().toArray();
-  const existingCollectionNames = new Set(existingCollections.map((collection) => collection.name));
+  const existingCollectionNames = new Set(existingCollections.map((existingCollection: { name: string }) => existingCollection.name));
 
   for (const collectionName of Object.values(COLLECTION)) {
     if (!existingCollectionNames.has(collectionName)) {
@@ -37,7 +37,7 @@ export async function setupCollections(): Promise<void> {
 }
 
 export async function getImageCount(): Promise<number> {
-  const database = getDb();
+  const database = getDB();
   return database.collection(COLLECTION.IMAGES).countDocuments();
 }
 
@@ -47,7 +47,7 @@ export async function getImages(
   sortField: string = "dateIndexed",
   sortDirection: 1 | -1 = -1,
 ): Promise<{ images: ImageDocument[]; total: number }> {
-  const database = getDb();
+  const database = getDB();
   const imagesCollection = database.collection<ImageDocument>(COLLECTION.IMAGES);
 
   const total = await imagesCollection.countDocuments();
@@ -66,7 +66,7 @@ export async function searchImages(
   page: number = 1,
   limit: number = 50,
 ): Promise<{ images: ImageDocument[]; total: number }> {
-  const database = getDb();
+  const database = getDB();
   const imagesCollection = database.collection<ImageDocument>(COLLECTION.IMAGES);
 
   const filter = { $text: { $search: query } };
