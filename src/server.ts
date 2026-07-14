@@ -1,6 +1,6 @@
 // ─── Entry Point ────────────────────────────────────────────
 
-import { createService } from "@rodrigo-barraza/service-library";
+import { createService } from "@rodrigo-barraza/utilities-library/service";
 import type { Application, Request, Response, NextFunction } from "express";
 import configuration from "./config.ts";
 

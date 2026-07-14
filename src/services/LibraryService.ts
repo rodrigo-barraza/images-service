@@ -1,7 +1,7 @@
 // ─── Library Service ────────────────────────────────────────
 // Core business logic for image library indexing and querying
 
-import { getDatabase } from "@rodrigo-barraza/service-library";
+import { getDatabase } from "@rodrigo-barraza/utilities-library/service";
 import { COLLECTIONS } from "../constants.ts";
 import type { ImageDocument } from "../types.ts";
 import logger from "../logger.ts";

@@ -1,7 +1,7 @@
 // ─── Thumbnail Service ──────────────────────────────────────
 // Generates and serves image thumbnails via MinIO
 
-import { MinioManager } from "@rodrigo-barraza/service-library";
+import { MinioManager } from "@rodrigo-barraza/utilities-library/service";
 import configuration from "../config.ts";
 import logger from "../logger.ts";
 
