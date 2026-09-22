@@ -40,7 +40,7 @@ Express 5 API for managing a personal image library. Indexes images from bind-mo
 npm install
 npm run dev          # tsx watch mode
 npm run typecheck    # tsc --noEmit
-npm run lint         # eslint
+npm run lint         # oxlint
 npm run test         # vitest
 ```
 
